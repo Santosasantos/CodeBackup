@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-rating-scale-heading" data-cy="RatingScaleCreateUpdateHeading" jhiTranslate="epmsApp.ratingScale.home.createOrEditLabel">
+        Create or edit a Rating Scale
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.ratingScale.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_scaletype" jhiTranslate="epmsApp.ratingScale.scaletype">Scaletype</label>
+          <input type="text" class="form-control" name="scaletype" id="field_scaletype" data-cy="scaletype" formControlName="scaletype" />
+          @if (editForm.get('scaletype')!.invalid && (editForm.get('scaletype')!.dirty || editForm.get('scaletype')!.touched)) {
+            <div>
+              @if (editForm.get('scaletype')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ratingscales" jhiTranslate="epmsApp.ratingScale.ratingscales">Ratingscales</label>
+          <input
+            type="text"
+            class="form-control"
+            name="ratingscales"
+            id="field_ratingscales"
+            data-cy="ratingscales"
+            formControlName="ratingscales"
+          />
+          @if (editForm.get('ratingscales')!.invalid && (editForm.get('ratingscales')!.dirty || editForm.get('ratingscales')!.touched)) {
+            <div>
+              @if (editForm.get('ratingscales')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

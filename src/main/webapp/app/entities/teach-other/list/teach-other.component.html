@@ -1,0 +1,125 @@
+<div>
+  <h2 id="page-heading" data-cy="TeachOtherHeading">
+    <span jhiTranslate="epmsApp.teachOther.home.title">Teach Others</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="epmsApp.teachOther.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-teach-other"
+        [routerLink]="['/teach-other/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="epmsApp.teachOther.home.createLabel">Create a new Teach Other</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (teachOthers?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="epmsApp.teachOther.home.notFound">No Teach Others found</span>
+    </div>
+  }
+
+  @if (teachOthers && teachOthers.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="technicalSkill">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.teachOther.technicalSkill">Technical Skill</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="recommendation">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.teachOther.recommendation">Recommendation</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="particularStrengh">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.teachOther.particularStrengh">Particular Strengh</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="whynotRecommend">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.teachOther.whynotRecommend">Whynot Recommend</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responder.id">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.teachOther.responder">Responder</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (teachOther of teachOthers; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/teach-other', teachOther.id, 'view']">{{ teachOther.id }}</a>
+              </td>
+              <td>{{ teachOther.technicalSkill }}</td>
+              <td [jhiTranslate]="'epmsApp.RecommendationValue.' + (teachOther.recommendation ?? 'null')">
+                {{ { null: '', Yes: 'Yes', No: 'No' }[teachOther.recommendation ?? 'null'] }}
+              </td>
+              <td>{{ teachOther.particularStrengh }}</td>
+              <td>{{ teachOther.whynotRecommend }}</td>
+              <td>
+                @if (teachOther.responder) {
+                  <div>
+                    <a [routerLink]="['/feedback-responder', teachOther.responder.id, 'view']">{{ teachOther.responder.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/teach-other', teachOther.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/teach-other', teachOther.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(teachOther)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

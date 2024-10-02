@@ -1,0 +1,26 @@
+{
+  "epmsApp": {
+    "extraquestion": {
+      "home": {
+        "title": "Extraquestions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Extraquestion",
+        "createOrEditLabel": "Create or edit a Extraquestion",
+        "notFound": "No Extraquestions found"
+      },
+      "created": "A new Extraquestion is created with identifier {{ param }}",
+      "updated": "A Extraquestion is updated with identifier {{ param }}",
+      "deleted": "A Extraquestion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Extraquestion {{ id }}?"
+      },
+      "detail": {
+        "title": "Extraquestion"
+      },
+      "id": "ID",
+      "question": "Question",
+      "questionAns": "Question Ans",
+      "feedback": "Feedback"
+    }
+  }
+}

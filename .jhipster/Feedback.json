@@ -1,0 +1,67 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060642"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "requestDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "FeedbackStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NEW,SENT_TO_SUPERVISOR,SAVE_AS_DRAFT,APPROVED,REJECTED,PENDING_FOR_ASSESSMENT,COMPLETED"
+    },
+    {
+      "fieldName": "responseDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assessmentYear",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Feedback",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "feedbackResponder",
+      "otherEntityRelationshipName": "feedback",
+      "relationshipName": "responders",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "extraquestion",
+      "otherEntityRelationshipName": "feedback",
+      "relationshipName": "extraQuestions",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "pin",
+      "otherEntityName": "employee",
+      "relationshipName": "requester",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "scaletype",
+      "otherEntityName": "ratingScale",
+      "relationshipName": "ratingScale",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

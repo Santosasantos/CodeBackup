@@ -1,0 +1,50 @@
+:host ::ng-deep {
+  .p-dropdown {
+    width: 100%;
+    .p-dropdown-label {
+      padding: 0.5rem 2rem;
+    }
+    .p-dropdown-trigger {
+      width: 3rem;
+    }
+  }
+
+  .p-autocomplete {
+    width: 100%;
+    input {
+      padding: 0.5rem 0.75rem;
+    }
+  }
+
+  .p-dropdown-panel .p-dropdown-items,
+  .p-autocomplete-panel .p-autocomplete-items {
+    padding: 0.5rem 0;
+  }
+
+  .p-dropdown-item,
+  .p-autocomplete-item {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      background-color: #f8f9fa;
+      border-color: #dee2e6;
+      padding: 0.5rem 0.75rem;
+    }
+    .p-datatable-tbody > tr > td {
+      border-color: #dee2e6;
+      padding: 0.5rem 0.75rem;
+    }
+  }
+
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+.badge {
+  font-size: 0.875em;
+  padding: 0.35em 0.65em;
+}

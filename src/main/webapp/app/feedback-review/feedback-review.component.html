@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row-md">
+    <div class="col-md-12">
+      <h1>Feedback Review</h1>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Supervisee Name</th>
+            <th>Designation</th>
+            <th>Functional Designation</th>
+            <th>Feedback Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let supervisee of superviseeList">
+            <td>{{ supervisee?.firstName }}{{ supervisee?.lastName }}</td>
+            <td>{{ supervisee?.designation }}</td>
+            <td>{{ supervisee?.functionalDesignation }}</td>
+            <td>{{ feedback.feedbackDate }}</td>
+            <td>{{ feedback.feedbackBy }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060643"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "category",
+      "fieldType": "ResponderCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SELF,SUPERVISOR,PEER,SUPERVISEE,STAKEHOLDER"
+    },
+    {
+      "fieldName": "stakeholderEmail",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responderStatus",
+      "fieldType": "FeedbackStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NEW,SENT_TO_SUPERVISOR,SAVE_AS_DRAFT,APPROVED,REJECTED,PENDING_FOR_ASSESSMENT,COMPLETED"
+    }
+  ],
+  "name": "FeedbackResponder",
+  "relationships": [
+    {
+      "otherEntityName": "feedbackDetails",
+      "otherEntityRelationshipName": "responder",
+      "relationshipName": "feedbackDetails",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "teachOther",
+      "otherEntityRelationshipName": "responder",
+      "relationshipName": "teachOthers",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "skillDevelopmentDetails",
+      "otherEntityRelationshipName": "responder",
+      "relationshipName": "skillDevelopmentDetails",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "pin",
+      "otherEntityName": "employee",
+      "relationshipName": "employee",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "feedback",
+      "otherEntityRelationshipName": "responders",
+      "relationshipName": "feedback",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

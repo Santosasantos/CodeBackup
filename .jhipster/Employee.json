@@ -1,0 +1,107 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060641"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "firstname",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "20",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "lastname",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "20",
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "pin",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "8",
+      "fieldValidateRulesMinlength": "4"
+    },
+    {
+      "fieldName": "project",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "employeeCategory",
+      "fieldType": "EmployeeCategory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "REGULAR,CONTRACT,UNKNOWN,INTERN"
+    },
+    {
+      "fieldName": "designation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "functionalDesignation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "joiningDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "currentOffice",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "jobStatus",
+      "fieldType": "JobStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,INACTIVE"
+    },
+    {
+      "fieldName": "employeeStatus",
+      "fieldType": "EmployeeStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CONFIRM,NONCONFIRM"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MALE,FEMALE,OTHER"
+    },
+    {
+      "fieldName": "mobile",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "grade",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "profile",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "name": "Employee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "pin",
+      "otherEntityName": "employee",
+      "relationshipName": "supervisor",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,24 @@
+{
+  "epmsApp": {
+    "skillDevelopmentType": {
+      "home": {
+        "title": "Skill Development Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Skill Development Type",
+        "createOrEditLabel": "Create or edit a Skill Development Type",
+        "notFound": "No Skill Development Types found"
+      },
+      "created": "A new Skill Development Type is created with identifier {{ param }}",
+      "updated": "A Skill Development Type is updated with identifier {{ param }}",
+      "deleted": "A Skill Development Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Skill Development Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Skill Development Type"
+      },
+      "id": "ID",
+      "skilldevelopmentname": "Skilldevelopmentname"
+    }
+  }
+}

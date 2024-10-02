@@ -1,0 +1,9 @@
+{
+  "epmsApp": {
+    "JobStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE"
+    }
+  }
+}

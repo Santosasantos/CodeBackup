@@ -1,0 +1,132 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-feedback-responder-heading"
+        data-cy="FeedbackResponderCreateUpdateHeading"
+        jhiTranslate="epmsApp.feedbackResponder.home.createOrEditLabel"
+      >
+        Create or edit a Feedback Responder
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.feedbackResponder.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_category" jhiTranslate="epmsApp.feedbackResponder.category">Category</label>
+          <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
+            <option [ngValue]="null">{{ 'epmsApp.ResponderCategory.null' | translate }}</option>
+            @for (responderCategory of responderCategoryValues; track $index) {
+              <option [value]="responderCategory">{{ 'epmsApp.ResponderCategory.' + responderCategory | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('category')!.invalid && (editForm.get('category')!.dirty || editForm.get('category')!.touched)) {
+            <div>
+              @if (editForm.get('category')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_stakeholderEmail" jhiTranslate="epmsApp.feedbackResponder.stakeholderEmail"
+            >Stakeholder Email</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="stakeholderEmail"
+            id="field_stakeholderEmail"
+            data-cy="stakeholderEmail"
+            formControlName="stakeholderEmail"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_responderStatus" jhiTranslate="epmsApp.feedbackResponder.responderStatus"
+            >Responder Status</label
+          >
+          <select
+            class="form-control"
+            name="responderStatus"
+            formControlName="responderStatus"
+            id="field_responderStatus"
+            data-cy="responderStatus"
+          >
+            <option [ngValue]="null">{{ 'epmsApp.FeedbackStatus.null' | translate }}</option>
+            @for (feedbackStatus of feedbackStatusValues; track $index) {
+              <option [value]="feedbackStatus">{{ 'epmsApp.FeedbackStatus.' + feedbackStatus | translate }}</option>
+            }
+          </select>
+          @if (
+            editForm.get('responderStatus')!.invalid && (editForm.get('responderStatus')!.dirty || editForm.get('responderStatus')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('responderStatus')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_employee" jhiTranslate="epmsApp.feedbackResponder.employee">Employee</label>
+          <select
+            class="form-control"
+            id="field_employee"
+            data-cy="employee"
+            name="employee"
+            formControlName="employee"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            @for (employeeOption of employeesSharedCollection; track $index) {
+              <option [ngValue]="employeeOption">{{ employeeOption.pin }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedback" jhiTranslate="epmsApp.feedbackResponder.feedback">Feedback</label>
+          <select
+            class="form-control"
+            id="field_feedback"
+            data-cy="feedback"
+            name="feedback"
+            formControlName="feedback"
+            [compareWith]="compareFeedback"
+          >
+            <option [ngValue]="null"></option>
+            @for (feedbackOption of feedbacksSharedCollection; track $index) {
+              <option [ngValue]="feedbackOption">{{ feedbackOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

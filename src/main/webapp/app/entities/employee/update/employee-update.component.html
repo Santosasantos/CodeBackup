@@ -1,0 +1,339 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-employee-heading" data-cy="EmployeeCreateUpdateHeading" jhiTranslate="epmsApp.employee.home.createOrEditLabel">
+        Create or edit a Employee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.employee.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_firstname" jhiTranslate="epmsApp.employee.firstname">Firstname</label>
+          <input type="text" class="form-control" name="firstname" id="field_firstname" data-cy="firstname" formControlName="firstname" />
+          @if (editForm.get('firstname')!.invalid && (editForm.get('firstname')!.dirty || editForm.get('firstname')!.touched)) {
+            <div>
+              @if (editForm.get('firstname')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('firstname')?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '2' }"
+                  >This field is required to be at least 2 characters.</small
+                >
+              }
+              @if (editForm.get('firstname')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastname" jhiTranslate="epmsApp.employee.lastname">Lastname</label>
+          <input type="text" class="form-control" name="lastname" id="field_lastname" data-cy="lastname" formControlName="lastname" />
+          @if (editForm.get('lastname')!.invalid && (editForm.get('lastname')!.dirty || editForm.get('lastname')!.touched)) {
+            <div>
+              @if (editForm.get('lastname')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('lastname')?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '2' }"
+                  >This field is required to be at least 2 characters.</small
+                >
+              }
+              @if (editForm.get('lastname')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_pin" jhiTranslate="epmsApp.employee.pin">Pin</label>
+          <input type="text" class="form-control" name="pin" id="field_pin" data-cy="pin" formControlName="pin" />
+          @if (editForm.get('pin')!.invalid && (editForm.get('pin')!.dirty || editForm.get('pin')!.touched)) {
+            <div>
+              @if (editForm.get('pin')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('pin')?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '4' }"
+                  >This field is required to be at least 4 characters.</small
+                >
+              }
+              @if (editForm.get('pin')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '8' }"
+                  >This field cannot be longer than 8 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_project" jhiTranslate="epmsApp.employee.project">Project</label>
+          <input type="text" class="form-control" name="project" id="field_project" data-cy="project" formControlName="project" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_employeeCategory" jhiTranslate="epmsApp.employee.employeeCategory">Employee Category</label>
+          <select
+            class="form-control"
+            name="employeeCategory"
+            formControlName="employeeCategory"
+            id="field_employeeCategory"
+            data-cy="employeeCategory"
+          >
+            <option [ngValue]="null">{{ 'epmsApp.EmployeeCategory.null' | translate }}</option>
+            @for (employeeCategory of employeeCategoryValues; track $index) {
+              <option [value]="employeeCategory">{{ 'epmsApp.EmployeeCategory.' + employeeCategory | translate }}</option>
+            }
+          </select>
+          @if (
+            editForm.get('employeeCategory')!.invalid &&
+            (editForm.get('employeeCategory')!.dirty || editForm.get('employeeCategory')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('employeeCategory')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_designation" jhiTranslate="epmsApp.employee.designation">Designation</label>
+          <input
+            type="text"
+            class="form-control"
+            name="designation"
+            id="field_designation"
+            data-cy="designation"
+            formControlName="designation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_functionalDesignation" jhiTranslate="epmsApp.employee.functionalDesignation"
+            >Functional Designation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="functionalDesignation"
+            id="field_functionalDesignation"
+            data-cy="functionalDesignation"
+            formControlName="functionalDesignation"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_joiningDate" jhiTranslate="epmsApp.employee.joiningDate">Joining Date</label>
+          <div class="d-flex">
+            <input
+              id="field_joiningDate"
+              data-cy="joiningDate"
+              type="datetime-local"
+              class="form-control"
+              name="joiningDate"
+              formControlName="joiningDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currentOffice" jhiTranslate="epmsApp.employee.currentOffice">Current Office</label>
+          <input
+            type="text"
+            class="form-control"
+            name="currentOffice"
+            id="field_currentOffice"
+            data-cy="currentOffice"
+            formControlName="currentOffice"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_jobStatus" jhiTranslate="epmsApp.employee.jobStatus">Job Status</label>
+          <select class="form-control" name="jobStatus" formControlName="jobStatus" id="field_jobStatus" data-cy="jobStatus">
+            <option [ngValue]="null">{{ 'epmsApp.JobStatus.null' | translate }}</option>
+            @for (jobStatus of jobStatusValues; track $index) {
+              <option [value]="jobStatus">{{ 'epmsApp.JobStatus.' + jobStatus | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('jobStatus')!.invalid && (editForm.get('jobStatus')!.dirty || editForm.get('jobStatus')!.touched)) {
+            <div>
+              @if (editForm.get('jobStatus')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_employeeStatus" jhiTranslate="epmsApp.employee.employeeStatus">Employee Status</label>
+          <select
+            class="form-control"
+            name="employeeStatus"
+            formControlName="employeeStatus"
+            id="field_employeeStatus"
+            data-cy="employeeStatus"
+          >
+            <option [ngValue]="null">{{ 'epmsApp.EmployeeStatus.null' | translate }}</option>
+            @for (employeeStatus of employeeStatusValues; track $index) {
+              <option [value]="employeeStatus">{{ 'epmsApp.EmployeeStatus.' + employeeStatus | translate }}</option>
+            }
+          </select>
+          @if (
+            editForm.get('employeeStatus')!.invalid && (editForm.get('employeeStatus')!.dirty || editForm.get('employeeStatus')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('employeeStatus')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateOfBirth" jhiTranslate="epmsApp.employee.dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_gender" jhiTranslate="epmsApp.employee.gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'epmsApp.Gender.null' | translate }}</option>
+            @for (gender of genderValues; track $index) {
+              <option [value]="gender">{{ 'epmsApp.Gender.' + gender | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('gender')!.invalid && (editForm.get('gender')!.dirty || editForm.get('gender')!.touched)) {
+            <div>
+              @if (editForm.get('gender')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_mobile" jhiTranslate="epmsApp.employee.mobile">Mobile</label>
+          <input type="text" class="form-control" name="mobile" id="field_mobile" data-cy="mobile" formControlName="mobile" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_email" jhiTranslate="epmsApp.employee.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_grade" jhiTranslate="epmsApp.employee.grade">Grade</label>
+          <input type="number" class="form-control" name="grade" id="field_grade" data-cy="grade" formControlName="grade" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_profile" jhiTranslate="epmsApp.employee.profile">Profile</label>
+          <div>
+            @if (editForm.get('profile')!.value) {
+              <img
+                [src]="'data:' + editForm.get('profileContentType')!.value + ';base64,' + editForm.get('profile')!.value"
+                style="max-height: 100px"
+                alt="employee"
+              />
+            }
+            @if (editForm.get('profile')!.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start"
+                  >{{ editForm.get('profileContentType')!.value }}, {{ byteSize(editForm.get('profile')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="clearInputImage('profile', 'profileContentType', 'file_profile')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_profile"
+              data-cy="profile"
+              (change)="setFileData($event, 'profile', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="profile" id="field_profile" data-cy="profile" formControlName="profile" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="profileContentType"
+            id="field_profileContentType"
+            formControlName="profileContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_supervisor" jhiTranslate="epmsApp.employee.supervisor">Supervisor</label>
+          <select
+            class="form-control"
+            id="field_supervisor"
+            data-cy="supervisor"
+            name="supervisor"
+            formControlName="supervisor"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            @for (employeeOption of employeesSharedCollection; track $index) {
+              <option [ngValue]="employeeOption">{{ employeeOption.pin }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

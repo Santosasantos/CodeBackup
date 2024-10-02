@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-feedback-sub-type-heading"
+        data-cy="FeedbackSubTypeCreateUpdateHeading"
+        jhiTranslate="epmsApp.feedbackSubType.home.createOrEditLabel"
+      >
+        Create or edit a Feedback Sub Type
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.feedbackSubType.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedbacksubname" jhiTranslate="epmsApp.feedbackSubType.feedbacksubname"
+            >Feedbacksubname</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="feedbacksubname"
+            id="field_feedbacksubname"
+            data-cy="feedbacksubname"
+            formControlName="feedbacksubname"
+          />
+          @if (
+            editForm.get('feedbacksubname')!.invalid && (editForm.get('feedbacksubname')!.dirty || editForm.get('feedbacksubname')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('feedbacksubname')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedbackdescription" jhiTranslate="epmsApp.feedbackSubType.feedbackdescription"
+            >Feedbackdescription</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="feedbackdescription"
+            id="field_feedbackdescription"
+            data-cy="feedbackdescription"
+            formControlName="feedbackdescription"
+          />
+          @if (
+            editForm.get('feedbackdescription')!.invalid &&
+            (editForm.get('feedbackdescription')!.dirty || editForm.get('feedbackdescription')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('feedbackdescription')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedbackType" jhiTranslate="epmsApp.feedbackSubType.feedbackType">Feedback Type</label>
+          <select
+            class="form-control"
+            id="field_feedbackType"
+            data-cy="feedbackType"
+            name="feedbackType"
+            formControlName="feedbackType"
+            [compareWith]="compareFeedbackType"
+          >
+            <option [ngValue]="null"></option>
+            @for (feedbackTypeOption of feedbackTypesSharedCollection; track $index) {
+              <option [ngValue]="feedbackTypeOption">{{ feedbackTypeOption.feedbackname }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

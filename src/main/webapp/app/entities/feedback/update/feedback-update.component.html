@@ -1,0 +1,173 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-feedback-heading" data-cy="FeedbackCreateUpdateHeading" jhiTranslate="epmsApp.feedback.home.createOrEditLabel">
+        Create or edit a Feedback
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.feedback.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_requestDate" jhiTranslate="epmsApp.feedback.requestDate">Request Date</label>
+          <div class="d-flex">
+            <input
+              id="field_requestDate"
+              data-cy="requestDate"
+              type="datetime-local"
+              class="form-control"
+              name="requestDate"
+              formControlName="requestDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('requestDate')!.invalid && (editForm.get('requestDate')!.dirty || editForm.get('requestDate')!.touched)) {
+            <div>
+              @if (editForm.get('requestDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('requestDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="epmsApp.feedback.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'epmsApp.FeedbackStatus.null' | translate }}</option>
+            @for (feedbackStatus of feedbackStatusValues; track $index) {
+              <option [value]="feedbackStatus">{{ 'epmsApp.FeedbackStatus.' + feedbackStatus | translate }}</option>
+            }
+          </select>
+          @if (editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_responseDate" jhiTranslate="epmsApp.feedback.responseDate">Response Date</label>
+          <div class="input-group">
+            <input
+              id="field_responseDate"
+              data-cy="responseDate"
+              type="text"
+              class="form-control"
+              name="responseDate"
+              ngbDatepicker
+              #responseDateDp="ngbDatepicker"
+              formControlName="responseDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="responseDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_createdBy" jhiTranslate="epmsApp.feedback.createdBy">Created By</label>
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+          @if (editForm.get('createdBy')!.invalid && (editForm.get('createdBy')!.dirty || editForm.get('createdBy')!.touched)) {
+            <div>
+              @if (editForm.get('createdBy')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_assessmentYear" jhiTranslate="epmsApp.feedback.assessmentYear">Assessment Year</label>
+          <input
+            type="number"
+            class="form-control"
+            name="assessmentYear"
+            id="field_assessmentYear"
+            data-cy="assessmentYear"
+            formControlName="assessmentYear"
+          />
+          @if (
+            editForm.get('assessmentYear')!.invalid && (editForm.get('assessmentYear')!.dirty || editForm.get('assessmentYear')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('assessmentYear')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('assessmentYear')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_requester" jhiTranslate="epmsApp.feedback.requester">Requester</label>
+          <select
+            class="form-control"
+            id="field_requester"
+            data-cy="requester"
+            name="requester"
+            formControlName="requester"
+            [compareWith]="compareEmployee"
+          >
+            <option [ngValue]="null"></option>
+            @for (employeeOption of employeesSharedCollection; track $index) {
+              <option [ngValue]="employeeOption">{{ employeeOption.pin }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ratingScale" jhiTranslate="epmsApp.feedback.ratingScale">Rating Scale</label>
+          <select
+            class="form-control"
+            id="field_ratingScale"
+            data-cy="ratingScale"
+            name="ratingScale"
+            formControlName="ratingScale"
+            [compareWith]="compareRatingScale"
+          >
+            <option [ngValue]="null"></option>
+            @for (ratingScaleOption of ratingScalesSharedCollection; track $index) {
+              <option [ngValue]="ratingScaleOption">{{ ratingScaleOption.scaletype }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

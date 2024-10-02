@@ -1,0 +1,27 @@
+{
+  "epmsApp": {
+    "feedbackDetails": {
+      "home": {
+        "title": "Feedback Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Feedback Details",
+        "createOrEditLabel": "Create or edit a Feedback Details",
+        "notFound": "No Feedback Details found"
+      },
+      "created": "A new Feedback Details is created with identifier {{ param }}",
+      "updated": "A Feedback Details is updated with identifier {{ param }}",
+      "deleted": "A Feedback Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Feedback Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Feedback Details"
+      },
+      "id": "ID",
+      "commentsforfeedbacksubtype": "Commentsforfeedbacksubtype",
+      "ratingvalue": "Ratingvalue",
+      "feedbackSubType": "Feedback Sub Type",
+      "responder": "Responder"
+    }
+  }
+}

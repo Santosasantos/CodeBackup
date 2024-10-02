@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (extraquestion()) {
+      <div>
+        <h2 data-cy="extraquestionDetailsHeading"><span jhiTranslate="epmsApp.extraquestion.detail.title">Extraquestion</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ extraquestion()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.extraquestion.question">Question</span></dt>
+          <dd>
+            <span>{{ extraquestion()!.question }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.extraquestion.feedback">Feedback</span></dt>
+          <dd>
+            @if (extraquestion()!.feedback) {
+              <div>
+                <a [routerLink]="['/feedback', extraquestion()!.feedback?.id, 'view']">{{ extraquestion()!.feedback?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/extraquestion', extraquestion()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

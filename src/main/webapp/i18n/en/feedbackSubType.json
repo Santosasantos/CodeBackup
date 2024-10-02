@@ -1,0 +1,26 @@
+{
+  "epmsApp": {
+    "feedbackSubType": {
+      "home": {
+        "title": "Feedback Sub Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Feedback Sub Type",
+        "createOrEditLabel": "Create or edit a Feedback Sub Type",
+        "notFound": "No Feedback Sub Types found"
+      },
+      "created": "A new Feedback Sub Type is created with identifier {{ param }}",
+      "updated": "A Feedback Sub Type is updated with identifier {{ param }}",
+      "deleted": "A Feedback Sub Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Feedback Sub Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Feedback Sub Type"
+      },
+      "id": "ID",
+      "feedbacksubname": "Feedbacksubname",
+      "feedbackdescription": "Feedbackdescription",
+      "feedbackType": "Feedback Type"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060647"
+  },
+  "applications": "*",
+  "fields": [],
+  "name": "SkillDevelopmentDetails",
+  "relationships": [
+    {
+      "otherEntityField": "skilldevelopmentname",
+      "otherEntityName": "skillDevelopmentType",
+      "relationshipName": "skillDevelopmentType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "feedbackResponder",
+      "otherEntityRelationshipName": "skillDevelopmentDetails",
+      "relationshipName": "responder",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

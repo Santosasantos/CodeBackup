@@ -1,0 +1,155 @@
+<div>
+  <h2 id="page-heading" data-cy="FeedbackResponderHeading">
+    <span jhiTranslate="epmsApp.feedbackResponder.home.title">Feedback Responders</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="epmsApp.feedbackResponder.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-feedback-responder"
+        [routerLink]="['/feedback-responder/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="epmsApp.feedbackResponder.home.createLabel">Create a new Feedback Responder</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (feedbackResponders?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="epmsApp.feedbackResponder.home.notFound">No Feedback Responders found</span>
+    </div>
+  }
+
+  @if (feedbackResponders && feedbackResponders.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="category">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedbackResponder.category">Category</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="stakeholderEmail">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedbackResponder.stakeholderEmail">Stakeholder Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responderStatus">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedbackResponder.responderStatus">Responder Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="employee.pin">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedbackResponder.employee">Employee</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="feedback.id">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedbackResponder.feedback">Feedback</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (feedbackResponder of feedbackResponders; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/feedback-responder', feedbackResponder.id, 'view']">{{ feedbackResponder.id }}</a>
+              </td>
+              <td [jhiTranslate]="'epmsApp.ResponderCategory.' + (feedbackResponder.category ?? 'null')">
+                {{
+                  { null: '', SELF: 'SELF', SUPERVISOR: 'SUPERVISOR', PEER: 'PEER', SUPERVISEE: 'SUPERVISEE', STAKEHOLDER: 'STAKEHOLDER' }[
+                    feedbackResponder.category ?? 'null'
+                  ]
+                }}
+              </td>
+              <td>{{ feedbackResponder.stakeholderEmail }}</td>
+              <td [jhiTranslate]="'epmsApp.FeedbackStatus.' + (feedbackResponder.responderStatus ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    NEW: 'NEW',
+                    SENT_TO_SUPERVISOR: 'SENT_TO_SUPERVISOR',
+                    SAVE_AS_DRAFT: 'SAVE_AS_DRAFT',
+                    APPROVED: 'APPROVED',
+                    REJECTED: 'REJECTED',
+                    PENDING_FOR_ASSESSMENT: 'PENDING_FOR_ASSESSMENT',
+                    COMPLETED: 'COMPLETED',
+                  }[feedbackResponder.responderStatus ?? 'null']
+                }}
+              </td>
+              <td>
+                @if (feedbackResponder.employee) {
+                  <div>
+                    <a [routerLink]="['/employee', feedbackResponder.employee.id, 'view']">{{ feedbackResponder.employee.pin }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (feedbackResponder.feedback) {
+                  <div>
+                    <a [routerLink]="['/feedback', feedbackResponder.feedback.id, 'view']">{{ feedbackResponder.feedback.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/feedback-responder', feedbackResponder.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/feedback-responder', feedbackResponder.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(feedbackResponder)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

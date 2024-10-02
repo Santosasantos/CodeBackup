@@ -1,0 +1,159 @@
+entity Employee {
+    firstname String required minlength(2) maxlength(20),
+    lastname String required minlength(2) maxlength(20),
+    pin String required unique minlength(4) maxlength(8),
+    project String,
+    employeeCategory EmployeeCategory required,
+    designation String,
+    functionalDesignation String,
+    joiningDate Instant,
+    currentOffice String,
+    jobStatus JobStatus required,
+    employeeStatus EmployeeStatus required,
+    dateOfBirth LocalDate,
+    gender Gender required,
+    mobile String,
+    email String,
+    grade Integer,
+    profile ImageBlob
+}
+
+enum EmployeeCategory {
+    REGULAR, CONTRACT, UNKNOWN, INTERN
+}
+
+enum JobStatus {
+    ACTIVE, INACTIVE
+}
+
+enum EmployeeStatus {
+    CONFIRM, NONCONFIRM
+}
+
+enum Gender {
+    MALE, FEMALE, OTHER
+}
+
+entity Feedback {
+    requestDate Instant required,
+    status FeedbackStatus required,
+    responseDate LocalDate,
+    createdBy String required,
+    assessmentYear Integer required
+}
+
+enum FeedbackStatus {
+    NEW, SENT_TO_SUPERVISOR, SAVE_AS_DRAFT, APPROVED, REJECTED, PENDING_FOR_ASSESSMENT, COMPLETED
+}
+
+entity FeedbackResponder {
+    category ResponderCategory required,
+    stakeholderEmail String,
+    responderStatus FeedbackStatus required,
+}
+
+enum ResponderCategory {
+    SELF, SUPERVISOR, PEER, SUPERVISEE, STAKEHOLDER
+}
+
+entity FeedbackDetails {
+    commentsforfeedbacksubtype String
+    ratingvalue Integer
+}
+
+entity FeedbackSubType {
+    feedbacksubname String required
+    feedbackdescription String required
+}
+
+entity FeedbackType {
+    feedbackname String required
+}
+
+entity SkillDevelopmentDetails {
+}
+
+entity SkillDevelopmentType {
+    skilldevelopmentname String required
+}
+
+entity TeachOther {
+    technicalSkill String required,
+    recommendation RecommendationValue required
+    particularStrengh String,
+    whynotRecommend String
+}
+
+entity Extraquestion {
+    question String required,
+}
+
+entity ExtraquestionAns{
+    questionans String required
+}
+
+enum RecommendationValue {
+    Yes, No
+}
+
+entity RatingScale {
+    scaletype String required
+    ratingscales String required
+}
+
+relationship ManyToOne {
+    Employee{supervisor(pin)} to Employee
+}
+
+relationship ManyToOne {
+    Feedback{requester(pin)} to Employee
+}
+
+relationship OneToMany {
+    Feedback{responders} to FeedbackResponder{feedback}
+}
+
+relationship ManyToOne {
+    FeedbackResponder{employee(pin)} to Employee
+}
+
+relationship ManyToOne {
+    Feedback{ratingScale(scaletype)} to RatingScale
+}
+
+relationship OneToMany {
+    FeedbackResponder{feedbackDetails} to FeedbackDetails{responder(id)}
+}
+
+relationship ManyToOne {
+    FeedbackDetails{feedbackSubType(feedbacksubname)} to FeedbackSubType
+}
+
+relationship ManyToOne {
+    FeedbackSubType{feedbackType(feedbackname)} to FeedbackType
+}
+
+relationship OneToMany {
+    FeedbackResponder{teachOthers} to TeachOther{responder(id)}
+}
+
+relationship OneToMany {
+    Feedback{extraQuestions} to Extraquestion{feedback(id)}
+}
+
+relationship OneToMany {
+    Extraquestion{questionAns} to ExtraquestionAns{questions(id)}
+}
+
+relationship OneToMany {
+    FeedbackResponder{skillDevelopmentDetails} to SkillDevelopmentDetails{responder(id)}
+}
+
+relationship ManyToOne {
+    SkillDevelopmentDetails{skillDevelopmentType(skilldevelopmentname)} to SkillDevelopmentType
+}
+
+
+paginate Employee with pagination
+paginate Feedback with infinite-scroll
+use serviceImpl for *

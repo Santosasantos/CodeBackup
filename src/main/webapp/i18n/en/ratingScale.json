@@ -1,0 +1,25 @@
+{
+  "epmsApp": {
+    "ratingScale": {
+      "home": {
+        "title": "Rating Scales",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Rating Scale",
+        "createOrEditLabel": "Create or edit a Rating Scale",
+        "notFound": "No Rating Scales found"
+      },
+      "created": "A new Rating Scale is created with identifier {{ param }}",
+      "updated": "A Rating Scale is updated with identifier {{ param }}",
+      "deleted": "A Rating Scale is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Rating Scale {{ id }}?"
+      },
+      "detail": {
+        "title": "Rating Scale"
+      },
+      "id": "ID",
+      "scaletype": "Scaletype",
+      "ratingscales": "Ratingscales"
+    }
+  }
+}

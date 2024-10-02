@@ -1,0 +1,31 @@
+{
+  "epmsApp": {
+    "feedbackResponder": {
+      "home": {
+        "title": "Feedback Responders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Feedback Responder",
+        "createOrEditLabel": "Create or edit a Feedback Responder",
+        "notFound": "No Feedback Responders found"
+      },
+      "created": "A new Feedback Responder is created with identifier {{ param }}",
+      "updated": "A Feedback Responder is updated with identifier {{ param }}",
+      "deleted": "A Feedback Responder is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Feedback Responder {{ id }}?"
+      },
+      "detail": {
+        "title": "Feedback Responder"
+      },
+      "id": "ID",
+      "category": "Category",
+      "stakeholderEmail": "Stakeholder Email",
+      "responderStatus": "Responder Status",
+      "feedbackDetails": "Feedback Details",
+      "teachOthers": "Teach Others",
+      "skillDevelopmentDetails": "Skill Development Details",
+      "employee": "Employee",
+      "feedback": "Feedback"
+    }
+  }
+}

@@ -11,7 +11,28 @@
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060641_added_entity_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060642_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060643_added_entity_FeedbackResponder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060644_added_entity_FeedbackDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060645_added_entity_FeedbackSubType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060646_added_entity_FeedbackType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060647_added_entity_SkillDevelopmentDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060648_added_entity_SkillDevelopmentType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060649_added_entity_TeachOther.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060650_added_entity_Extraquestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060651_added_entity_ExtraquestionAns.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060652_added_entity_RatingScale.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20240919060641_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060642_added_entity_constraints_Feedback.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060643_added_entity_constraints_FeedbackResponder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060644_added_entity_constraints_FeedbackDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060645_added_entity_constraints_FeedbackSubType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060647_added_entity_constraints_SkillDevelopmentDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060649_added_entity_constraints_TeachOther.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060650_added_entity_constraints_Extraquestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240919060651_added_entity_constraints_ExtraquestionAns.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

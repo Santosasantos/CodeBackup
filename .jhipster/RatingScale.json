@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060652"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "scaletype",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ratingscales",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "RatingScale",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

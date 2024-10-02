@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (feedbackResponder()) {
+      <div>
+        <h2 data-cy="feedbackResponderDetailsHeading">
+          <span jhiTranslate="epmsApp.feedbackResponder.detail.title">Feedback Responder</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ feedbackResponder()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackResponder.category">Category</span></dt>
+          <dd>
+            <span [jhiTranslate]="'epmsApp.ResponderCategory.' + (feedbackResponder()!.category ?? 'null')">{{
+              { null: '', SELF: 'SELF', SUPERVISOR: 'SUPERVISOR', PEER: 'PEER', SUPERVISEE: 'SUPERVISEE', STAKEHOLDER: 'STAKEHOLDER' }[
+                feedbackResponder()!.category ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackResponder.stakeholderEmail">Stakeholder Email</span></dt>
+          <dd>
+            <span>{{ feedbackResponder()!.stakeholderEmail }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackResponder.responderStatus">Responder Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'epmsApp.FeedbackStatus.' + (feedbackResponder()!.responderStatus ?? 'null')">{{
+              {
+                null: '',
+                NEW: 'NEW',
+                SENT_TO_SUPERVISOR: 'SENT_TO_SUPERVISOR',
+                SAVE_AS_DRAFT: 'SAVE_AS_DRAFT',
+                APPROVED: 'APPROVED',
+                REJECTED: 'REJECTED',
+                PENDING_FOR_ASSESSMENT: 'PENDING_FOR_ASSESSMENT',
+                COMPLETED: 'COMPLETED',
+              }[feedbackResponder()!.responderStatus ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackResponder.employee">Employee</span></dt>
+          <dd>
+            @if (feedbackResponder()!.employee) {
+              <div>
+                <a [routerLink]="['/employee', feedbackResponder()!.employee?.id, 'view']">{{ feedbackResponder()!.employee?.pin }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackResponder.feedback">Feedback</span></dt>
+          <dd>
+            @if (feedbackResponder()!.feedback) {
+              <div>
+                <a [routerLink]="['/feedback', feedbackResponder()!.feedback?.id, 'view']">{{ feedbackResponder()!.feedback?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feedback-responder', feedbackResponder()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

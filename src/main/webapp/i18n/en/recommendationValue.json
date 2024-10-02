@@ -1,0 +1,9 @@
+{
+  "epmsApp": {
+    "RecommendationValue": {
+      "null": "",
+      "Yes": "Yes",
+      "No": "No"
+    }
+  }
+}

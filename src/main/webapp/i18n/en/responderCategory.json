@@ -1,0 +1,12 @@
+{
+  "epmsApp": {
+    "ResponderCategory": {
+      "null": "",
+      "SELF": "SELF",
+      "SUPERVISOR": "SUPERVISOR",
+      "PEER": "PEER",
+      "SUPERVISEE": "SUPERVISEE",
+      "STAKEHOLDER": "STAKEHOLDER"
+    }
+  }
+}

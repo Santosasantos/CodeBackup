@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-feedback-type-heading"
+        data-cy="FeedbackTypeCreateUpdateHeading"
+        jhiTranslate="epmsApp.feedbackType.home.createOrEditLabel"
+      >
+        Create or edit a Feedback Type
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="epmsApp.feedbackType.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedbackname" jhiTranslate="epmsApp.feedbackType.feedbackname">Feedbackname</label>
+          <input
+            type="text"
+            class="form-control"
+            name="feedbackname"
+            id="field_feedbackname"
+            data-cy="feedbackname"
+            formControlName="feedbackname"
+          />
+          @if (editForm.get('feedbackname')!.invalid && (editForm.get('feedbackname')!.dirty || editForm.get('feedbackname')!.touched)) {
+            <div>
+              @if (editForm.get('feedbackname')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

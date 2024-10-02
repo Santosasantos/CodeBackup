@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060649"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "technicalSkill",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "recommendation",
+      "fieldType": "RecommendationValue",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Yes,No"
+    },
+    {
+      "fieldName": "particularStrengh",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "whynotRecommend",
+      "fieldType": "String"
+    }
+  ],
+  "name": "TeachOther",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "feedbackResponder",
+      "otherEntityRelationshipName": "teachOthers",
+      "relationshipName": "responder",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

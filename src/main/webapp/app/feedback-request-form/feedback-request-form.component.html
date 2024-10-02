@@ -1,0 +1,166 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Feedback Request Form</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="feedbackForm" (ngSubmit)="saveResponder()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="assessmentYear" class="form-label">Assessment Year</label>
+                <input id="assessmentYear" type="text" class="form-control" [value]="assessmentYear" readonly />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="category" class="form-label">Feedback Provider Category</label>
+                <p-dropdown
+                  id="category"
+                  [options]="responderCategories"
+                  formControlName="category"
+                  optionLabel="label"
+                  optionValue="value"
+                  (onChange)="onCategoryChange()"
+                  placeholder="Select Category"
+                  styleClass="w-100"
+                ></p-dropdown>
+              </div>
+
+              <div class="col-12 mb-3">
+                <label for="ratingScale" class="form-label">Rating Scale</label>
+                <div class="input-group">
+                  <p-dropdown
+                    id="ratingScale"
+                    [options]="ratingScales"
+                    formControlName="ratingScale"
+                    optionLabel="scaletype"
+                    [showClear]="true"
+                    placeholder="Select Rating Scale"
+                    styleClass="w-100"
+                  ></p-dropdown>
+                  <button *ngIf="isAdmin" type="button" class="btn btn-secondary" (click)="showCreateRatingScaleDialog()">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-12 mb-3" *ngIf="feedbackForm.get('category')?.value === ResponderCategory.STAKEHOLDER">
+                <label for="stakeholderEmail" class="form-label">Stakeholder Email</label>
+                <input id="stakeholderEmail" type="email" class="form-control" formControlName="stakeholderEmail" />
+              </div>
+
+              <div
+                class="col-12 mb-3"
+                *ngIf="feedbackForm.get('category')?.value && feedbackForm.get('category')?.value !== ResponderCategory.STAKEHOLDER"
+              >
+                <label for="employee" class="form-label">Search Employee</label>
+                <p-autoComplete
+                  id="employee"
+                  formControlName="employee"
+                  [suggestions]="filteredEmployees"
+                  (completeMethod)="searchEmployees($event)"
+                  [dropdown]="true"
+                  [forceSelection]="true"
+                  (onSelect)="selectEmployee($event)"
+                  [field]="'label'"
+                  placeholder="Search by PIN, Name, or Keyword"
+                  styleClass="w-100"
+                >
+                </p-autoComplete>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+              <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
+                <i class="fas fa-save me-2"></i>Save Responder
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="reset()"><i class="fas fa-undo me-2"></i>Clear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-4">
+      <p-table [value]="selectedResponders" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>SL</th>
+            <th>[PIN] Name</th>
+            <th>Designation</th>
+            <th>Feedback Provider Category</th>
+            <th>Status</th>
+            <th>Request Date</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-responder let-i="rowIndex">
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>
+              {{
+                responder.employee
+                  ? '[' + responder.employee.pin + '] ' + responder.employee.firstname + ' ' + responder.employee.lastname
+                  : responder.stakeholderEmail
+              }}
+            </td>
+            <td>{{ responder.employee?.designation }}</td>
+            <td>{{ responder.category }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-primary': responder.status === FeedbackStatus.NEW,
+                  'bg-success': responder.status === FeedbackStatus.APPROVED,
+                  'bg-warning': responder.status === FeedbackStatus.PENDING_FOR_ASSESSMENT,
+                  'bg-danger': responder.status === FeedbackStatus.REJECTED,
+                }"
+                >{{ responder.status }}</span
+              >
+            </td>
+            <td>{{ responder.requestDate }}</td>
+            <td>
+              <button
+                *ngIf="responder.category !== 'SELF' && responder.category !== 'SUPERVISOR' && responder.status === FeedbackStatus.NEW"
+                class="btn btn-danger btn-sm"
+                (click)="removeResponder(i)"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="col-12 mt-4 d-flex justify-content-between">
+      <button class="btn btn-success" (click)="sendToSupervisor()" [disabled]="!canSendToSupervisor()">
+        <i class="fas fa-paper-plane me-2"></i>Send to Supervisor
+      </button>
+      <button class="btn btn-secondary" (click)="backToEHMS()"><i class="fas fa-arrow-left me-2"></i>Back to eHMS</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rating Scale Dialog -->
+<p-dialog header="Create New Rating Scale" [(visible)]="displayCreateRatingDialoge" [modal]="true" [style]="{ width: '50vw' }">
+  <form [formGroup]="ratingScaleForm" (ngSubmit)="createRatingScale()">
+    <div class="mb-3">
+      <label for="scaletype" class="form-label">Scale Type</label>
+      <input id="scaletype" type="text" class="form-control" formControlName="scaletype" />
+    </div>
+    <div class="mb-3">
+      <label for="ratingscales" class="form-label">Rating Scales (comma-separated)</label>
+      <input id="ratingscales" type="text" class="form-control" formControlName="ratingscales" />
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btn-secondary me-2" (click)="hideCreateRatingScaleDialog()">
+      <i class="fas fa-times me-2"></i>Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="createRatingScale()" [disabled]="!checkRatingForm()">
+      <i class="fas fa-check me-2"></i>Create
+    </button>
+  </ng-template>
+</p-dialog>

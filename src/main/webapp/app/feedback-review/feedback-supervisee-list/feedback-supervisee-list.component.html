@@ -1,0 +1,79 @@
+@if (isLoading) {
+  <div class="flex items-center justify-center h-64">
+    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24"></div>
+  </div>
+} @else {
+  <div class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Supervisee List and Feedback Status</h2>
+    <div class="overflow-x-auto shadow-md rounded-lg">
+      <table class="w-full table-auto">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="px-4 py-3 text-left">Supervisee Name [PIN]</th>
+            <th class="px-4 py-3 text-left">Designation</th>
+            <th class="px-4 py-3 text-left">Functional Designation</th>
+            <th class="px-4 py-3 text-left">Feedback Status</th>
+            <th class="px-4 py-3 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          @for (entry of superviseeMap; track entry) {
+            <tr class="hover:bg-gray-50 transition-colors duration-200">
+              <td class="px-4 py-3">
+                <i class="fas fa-user mr-2 text-gray-500"></i>
+                {{ entry.keys.firstname }} {{ entry.key.lastname }}
+                <span class="text-sm text-gray-500">[{{ entry.key.pin }}]</span>
+              </td>
+              <td class="px-4 py-3">
+                <i class="fas fa-briefcase mr-2 text-gray-500"></i>
+                {{ entry.key.designation }}
+              </td>
+              <td class="px-4 py-3">
+                <i class="fas fa-sitemap mr-2 text-gray-500"></i>
+                {{ entry.key.functionalDesignation }}
+              </td>
+              <td class="px-4 py-3">
+                <span
+                  [ngClass]="{
+                    'px-2 py-1 rounded-full text-xs font-medium inline-flex items-center': true,
+                    'bg-green-100 text-green-800': getFeedbackStatus(entry.value) === (FeedbackStatus.COMPLETED || FeedbackStatus.APPROVED),
+                    'bg-yellow-100 text-yellow-800':
+                      getFeedbackStatus(entry.value) ===
+                      (FeedbackStatus.NEW || FeedbackStatus.PENDING_FOR_ASSESSMENT || FeedbackStatus.SENT_TO_SUPERVISOR),
+                    'bg-red-100 text-red-800': getFeedbackStatus(entry.value) === ('No feedback' || FeedbackStatus.REJECTED),
+                  }"
+                >
+                  <i
+                    class="fas mr-1"
+                    [ngClass]="{
+                      'fa-check-circle': getFeedbackStatus(entry.value) === (FeedbackStatus.COMPLETED || FeedbackStatus.APPROVED),
+                      'fa-clock':
+                        getFeedbackStatus(entry.value) ===
+                        (FeedbackStatus.NEW || FeedbackStatus.PENDING_FOR_ASSESSMENT || FeedbackStatus.SENT_TO_SUPERVISOR),
+                      'fa-times-circle': getFeedbackStatus(entry.value) === ('No feedback' || FeedbackStatus.REJECTED),
+                    }"
+                  ></i>
+                  {{ getFeedbackStatus(entry.value) }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-center">
+                <button
+                  (click)="viewFeedback(entry.value?.id)"
+                  class="font-medium py-2 px-4 rounded-lg transition-colors duration-200 inline-flex items-center"
+                  [disabled]="isButtonDisabled(entry.value)"
+                  [ngClass]="{
+                    'bg-blue-500 hover:bg-blue-600 text-white': !isButtonDisabled(entry.value),
+                    'bg-gray-300 text-gray-500 cursor-not-allowed': isButtonDisabled(entry.value),
+                  }"
+                >
+                  <i class="fas fa-eye mr-2"></i>
+                  {{ isButtonDisabled(entry.value) ? 'No Action' : 'View Feedback' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+}

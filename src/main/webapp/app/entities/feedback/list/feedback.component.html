@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="FeedbackHeading">
+    <span jhiTranslate="epmsApp.feedback.home.title">Feedbacks</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="epmsApp.feedback.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-feedback"
+        [routerLink]="['/feedback/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="epmsApp.feedback.home.createLabel">Create a new Feedback</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (feedbacks?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="epmsApp.feedback.home.notFound">No Feedbacks found</span>
+    </div>
+  }
+
+  @if (feedbacks && feedbacks.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="requestDate">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.requestDate">Request Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="responseDate">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.responseDate">Response Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdBy">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.createdBy">Created By</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="assessmentYear">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.assessmentYear">Assessment Year</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="requester.pin">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.requester">Requester</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="ratingScale.scaletype">
+              <div class="d-flex">
+                <span jhiTranslate="epmsApp.feedback.ratingScale">Rating Scale</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (feedback of feedbacks; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/feedback', feedback.id, 'view']">{{ feedback.id }}</a>
+              </td>
+              <td>{{ feedback.requestDate | formatMediumDatetime }}</td>
+              <td [jhiTranslate]="'epmsApp.FeedbackStatus.' + (feedback.status ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    NEW: 'NEW',
+                    SENT_TO_SUPERVISOR: 'SENT_TO_SUPERVISOR',
+                    SAVE_AS_DRAFT: 'SAVE_AS_DRAFT',
+                    APPROVED: 'APPROVED',
+                    REJECTED: 'REJECTED',
+                    PENDING_FOR_ASSESSMENT: 'PENDING_FOR_ASSESSMENT',
+                    COMPLETED: 'COMPLETED',
+                  }[feedback.status ?? 'null']
+                }}
+              </td>
+              <td>{{ feedback.responseDate | formatMediumDate }}</td>
+              <td>{{ feedback.createdBy }}</td>
+              <td>{{ feedback.assessmentYear }}</td>
+              <td>
+                @if (feedback.requester) {
+                  <div>
+                    <a [routerLink]="['/employee', feedback.requester.id, 'view']">{{ feedback.requester.pin }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (feedback.ratingScale) {
+                  <div>
+                    <a [routerLink]="['/rating-scale', feedback.ratingScale.id, 'view']">{{ feedback.ratingScale.scaletype }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/feedback', feedback.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/feedback', feedback.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(feedback)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

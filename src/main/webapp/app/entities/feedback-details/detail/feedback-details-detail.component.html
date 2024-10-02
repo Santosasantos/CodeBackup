@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (feedbackDetails()) {
+      <div>
+        <h2 data-cy="feedbackDetailsDetailsHeading"><span jhiTranslate="epmsApp.feedbackDetails.detail.title">Feedback Details</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ feedbackDetails()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackDetails.commentsforfeedbacksubtype">Commentsforfeedbacksubtype</span></dt>
+          <dd>
+            <span>{{ feedbackDetails()!.commentsforfeedbacksubtype }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackDetails.ratingvalue">Ratingvalue</span></dt>
+          <dd>
+            <span>{{ feedbackDetails()!.ratingvalue }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackDetails.feedbackSubType">Feedback Sub Type</span></dt>
+          <dd>
+            @if (feedbackDetails()!.feedbackSubType) {
+              <div>
+                <a [routerLink]="['/feedback-sub-type', feedbackDetails()!.feedbackSubType?.id, 'view']">{{
+                  feedbackDetails()!.feedbackSubType?.feedbacksubname
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedbackDetails.responder">Responder</span></dt>
+          <dd>
+            @if (feedbackDetails()!.responder) {
+              <div>
+                <a [routerLink]="['/feedback-responder', feedbackDetails()!.responder?.id, 'view']">{{
+                  feedbackDetails()!.responder?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feedback-details', feedbackDetails()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

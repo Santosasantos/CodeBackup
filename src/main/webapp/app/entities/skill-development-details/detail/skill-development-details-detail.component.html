@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (skillDevelopmentDetails()) {
+      <div>
+        <h2 data-cy="skillDevelopmentDetailsDetailsHeading">
+          <span jhiTranslate="epmsApp.skillDevelopmentDetails.detail.title">Skill Development Details</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ skillDevelopmentDetails()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.skillDevelopmentDetails.skillDevelopmentType">Skill Development Type</span></dt>
+          <dd>
+            @if (skillDevelopmentDetails()!.skillDevelopmentType) {
+              <div>
+                <a [routerLink]="['/skill-development-type', skillDevelopmentDetails()!.skillDevelopmentType?.id, 'view']">{{
+                  skillDevelopmentDetails()!.skillDevelopmentType?.skilldevelopmentname
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="epmsApp.skillDevelopmentDetails.responder">Responder</span></dt>
+          <dd>
+            @if (skillDevelopmentDetails()!.responder) {
+              <div>
+                <a [routerLink]="['/feedback-responder', skillDevelopmentDetails()!.responder?.id, 'view']">{{
+                  skillDevelopmentDetails()!.responder?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/skill-development-details', skillDevelopmentDetails()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

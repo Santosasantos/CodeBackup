@@ -8,7 +8,18 @@
       "entities": {
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "employee": "Employee",
+        "feedback": "Feedback",
+        "feedbackResponder": "Feedback Responder",
+        "feedbackDetails": "Feedback Details",
+        "feedbackSubType": "Feedback Sub Type",
+        "feedbackType": "Feedback Type",
+        "skillDevelopmentDetails": "Skill Development Details",
+        "skillDevelopmentType": "Skill Development Type",
+        "teachOther": "Teach Other",
+        "extraquestion": "Extraquestion",
+        "extraquestionAns": "Extraquestion Ans",
+        "ratingScale": "Rating Scale"
       },
       "account": {
         "main": "Account",

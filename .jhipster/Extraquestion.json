@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060650"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "question",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Extraquestion",
+  "relationships": [
+    {
+      "otherEntityName": "extraquestionAns",
+      "otherEntityRelationshipName": "questions",
+      "relationshipName": "questionAns",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "feedback",
+      "otherEntityRelationshipName": "extraQuestions",
+      "relationshipName": "feedback",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

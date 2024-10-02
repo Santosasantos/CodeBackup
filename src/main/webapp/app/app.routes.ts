@@ -7,12 +7,23 @@ import { errorRoute } from './layouts/error/error.route';
 import HomeComponent from './home/home.component';
 import NavbarComponent from './layouts/navbar/navbar.component';
 import LoginComponent from './login/login.component';
+import { FeedbackRequestFormComponent } from './feedback-request-form/feedback-request-form.component';
+import { FeedbackSuperviseeListComponent } from './feedback-review/feedback-supervisee-list/feedback-supervisee-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     title: 'home.title',
+  },
+  {
+    path: 'feedback-request-form',
+    component: FeedbackRequestFormComponent,
+    title: 'feedbackRequestForm.title',
+  },
+  {
+    path: 'feedback-supervisee',
+    component: FeedbackSuperviseeListComponent,
   },
   {
     path: '',

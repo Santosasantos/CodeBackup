@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (feedback()) {
+      <div>
+        <h2 data-cy="feedbackDetailsHeading"><span jhiTranslate="epmsApp.feedback.detail.title">Feedback</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ feedback()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.requestDate">Request Date</span></dt>
+          <dd>
+            <span>{{ feedback()!.requestDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'epmsApp.FeedbackStatus.' + (feedback()!.status ?? 'null')">{{
+              {
+                null: '',
+                NEW: 'NEW',
+                SENT_TO_SUPERVISOR: 'SENT_TO_SUPERVISOR',
+                SAVE_AS_DRAFT: 'SAVE_AS_DRAFT',
+                APPROVED: 'APPROVED',
+                REJECTED: 'REJECTED',
+                PENDING_FOR_ASSESSMENT: 'PENDING_FOR_ASSESSMENT',
+                COMPLETED: 'COMPLETED',
+              }[feedback()!.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.responseDate">Response Date</span></dt>
+          <dd>
+            <span>{{ feedback()!.responseDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.createdBy">Created By</span></dt>
+          <dd>
+            <span>{{ feedback()!.createdBy }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.assessmentYear">Assessment Year</span></dt>
+          <dd>
+            <span>{{ feedback()!.assessmentYear }}</span>
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.requester">Requester</span></dt>
+          <dd>
+            @if (feedback()!.requester) {
+              <div>
+                <a [routerLink]="['/employee', feedback()!.requester?.id, 'view']">{{ feedback()!.requester?.pin }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="epmsApp.feedback.ratingScale">Rating Scale</span></dt>
+          <dd>
+            @if (feedback()!.ratingScale) {
+              <div>
+                <a [routerLink]="['/rating-scale', feedback()!.ratingScale?.id, 'view']">{{ feedback()!.ratingScale?.scaletype }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/feedback', feedback()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

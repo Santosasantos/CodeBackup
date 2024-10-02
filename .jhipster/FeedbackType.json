@@ -1,0 +1,17 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060646"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "feedbackname",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "FeedbackType",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

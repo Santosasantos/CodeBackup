@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20240919060644"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "commentsforfeedbacksubtype",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ratingvalue",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "FeedbackDetails",
+  "relationships": [
+    {
+      "otherEntityField": "feedbacksubname",
+      "otherEntityName": "feedbackSubType",
+      "relationshipName": "feedbackSubType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "feedbackResponder",
+      "otherEntityRelationshipName": "feedbackDetails",
+      "relationshipName": "responder",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

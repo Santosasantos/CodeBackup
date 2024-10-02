@@ -1,0 +1,28 @@
+{
+  "epmsApp": {
+    "teachOther": {
+      "home": {
+        "title": "Teach Others",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Teach Other",
+        "createOrEditLabel": "Create or edit a Teach Other",
+        "notFound": "No Teach Others found"
+      },
+      "created": "A new Teach Other is created with identifier {{ param }}",
+      "updated": "A Teach Other is updated with identifier {{ param }}",
+      "deleted": "A Teach Other is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Teach Other {{ id }}?"
+      },
+      "detail": {
+        "title": "Teach Other"
+      },
+      "id": "ID",
+      "technicalSkill": "Technical Skill",
+      "recommendation": "Recommendation",
+      "particularStrengh": "Particular Strengh",
+      "whynotRecommend": "Whynot Recommend",
+      "responder": "Responder"
+    }
+  }
+}

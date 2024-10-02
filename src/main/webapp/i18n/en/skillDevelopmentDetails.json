@@ -1,0 +1,25 @@
+{
+  "epmsApp": {
+    "skillDevelopmentDetails": {
+      "home": {
+        "title": "Skill Development Details",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Skill Development Details",
+        "createOrEditLabel": "Create or edit a Skill Development Details",
+        "notFound": "No Skill Development Details found"
+      },
+      "created": "A new Skill Development Details is created with identifier {{ param }}",
+      "updated": "A Skill Development Details is updated with identifier {{ param }}",
+      "deleted": "A Skill Development Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Skill Development Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Skill Development Details"
+      },
+      "id": "ID",
+      "skillDevelopmentType": "Skill Development Type",
+      "responder": "Responder"
+    }
+  }
+}

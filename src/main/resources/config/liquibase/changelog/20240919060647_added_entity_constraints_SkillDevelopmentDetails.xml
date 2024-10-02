@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity SkillDevelopmentDetails.
+    -->
+    <changeSet id="20240919060647-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="skill_development_type_id"
+                                 baseTableName="skill_development_details"
+                                 constraintName="fk_skill_development_details__skill_development_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="skill_development_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="responder_id"
+                                 baseTableName="skill_development_details"
+                                 constraintName="fk_skill_development_details__responder_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="feedback_responder"
+                                 />
+    </changeSet>
+</databaseChangeLog>
